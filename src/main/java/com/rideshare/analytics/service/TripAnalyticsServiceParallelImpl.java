@@ -25,10 +25,9 @@ import java.util.stream.Stream;
 public class TripAnalyticsServiceParallelImpl implements TripAnalyticsService {
 
     public Map<String, BigDecimal> calculateTotalEarnings(final Stream<Trip> tripStream) {
-        final List<Trip> trips = tripStream.collect(Collectors.toList());
-        return trips
-                .parallelStream()
-                .collect(Collectors.groupingByConcurrent(
+        return tripStream
+                .parallel()
+                .collect(Collectors.groupingBy(
                         Trip::getDriverId,
                         Collectors.reducing(
                                 BigDecimal.ZERO,
@@ -57,9 +56,8 @@ public class TripAnalyticsServiceParallelImpl implements TripAnalyticsService {
     }
 
     public double calculateAverageDistance(final Stream<Trip> tripStream) {
-        final List<Trip> trips = tripStream.collect(Collectors.toList());
-        return trips
-                .parallelStream()
+        return tripStream
+                .parallel()
                 .mapToDouble(Trip::getDistance)
                 .average()
                 .orElse(0);
