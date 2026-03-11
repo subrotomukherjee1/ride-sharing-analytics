@@ -4,34 +4,29 @@ on:
   push:
     branches:
       - main
-pull_request:
-  branches:
-    - main
 
 jobs:
-build:
-runs-on: ubuntu-latest
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-  - name: Checkout repository
-    uses: actions/checkout@v4
+      - name: Build JAR with Maven
+        run: mvn clean package -DskipTests
 
-  - name: Set up JDK 17
-    uses: actions/setup-java@v4
-    with:
-      distribution: 'temurin'
-      java-version: '17'
+      - name: Verify JAR file
+        run: ls -l target/
 
-  - name: Build JAR with Maven
-    run: mvn clean package -DskipTests
+      - name: Build Docker Image
+        run: |
+          docker build -t ride-sharing-analytics:latest .
 
-  - name: Verify JAR file
-    run: ls -l target/
-
-  - name: Build Docker Image
-    run: |
-      docker build -t ride-sharing-analytics:latest .
-
-  - name: Verify Docker Image
-    run: docker images
+      - name: Verify Docker Image
+        run: docker images
