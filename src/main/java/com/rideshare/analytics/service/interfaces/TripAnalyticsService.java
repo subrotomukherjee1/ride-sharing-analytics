@@ -20,13 +20,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public interface TripAnalyticsService {
-    Map<String, BigDecimal> calculateTotalEarnings(final Stream<Trip> tripStream);
-
-    Set<String> findHighestEarningDrivers(final Map<String, BigDecimal> earningsMap);
+    Map<String, BigDecimal> calculateTotalEarnings(final Stream<Trip> tripStream);// Business Requirement
+    Set<String> findHighestEarningDrivers(final Map<String, BigDecimal> earningsMap); // Business Requirement
 
     double calculateAverageDistance(final Stream<Trip> tripStream);
 
-    List<Trip> findTripsAboveAverage(Stream<Trip> tripStream, double averageDistance);
+    List<Trip> findTripsAboveAverage(Stream<Trip> tripStream, double averageDistance);// Business Requirement
 
     void addTrips(final List<Trip> trips);
 
