@@ -8,7 +8,7 @@ public final class Trip {
     private final String tripId;
     private final String driverId;
     private final double distance;
-    private final BigDecimal fare;
+    private final BigDecimal fare; // What are the advantages of using BigDecimal ? What are the use cases for BigDecimal Usage?
 
     public Trip(final String tripId, final String driverId,
                 final double distance, final BigDecimal fare) {
