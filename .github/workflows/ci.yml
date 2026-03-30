@@ -48,12 +48,12 @@ jobs:
       # Tag Docker image for Public ECR
       - name: Tag Docker Image for ECR
         run: |
-          docker tag ride-sharing:${IMAGE_TAG::7} ${IMAGE_NAME}:${IMAGE_TAG}
+          docker tag ride-sharing:${IMAGE_TAG::7} ${IMAGE_NAME}:${IMAGE_TAG::7}
 
       # Push Docker image to Public ECR
       - name: Push Docker Image to ECR
         run: |
-          docker push public.ecr.aws/p7g1n7k2/innovation/ride-share:latest
+          docker push ${IMAGE_NAME}:${IMAGE_TAG::7}
 
       # Verify Docker image locally
       - name: Verify Docker Image
