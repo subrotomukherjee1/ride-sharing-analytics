@@ -29,7 +29,7 @@ public class TripController {
     @Qualifier("tripAnalyticsServiceImpl")
     private TripAnalyticsService service;
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") String filename) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") String filename) { // Improve the design
         File file = new File(filename);
         try (BufferedReader reader =
                      new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -52,7 +52,7 @@ public class TripController {
 
     @GetMapping("/earnings")
     public List<DriverEarningsDTO> getEarnings() {
-        final List<Trip> trips = service.getTrips();
+        final List<Trip> trips = service.getTrips(); // Can we convert this into Stream
         final Map<String, BigDecimal> earnings =
                 service.calculateTotalEarnings(trips.stream());
         return earnings.entrySet()

@@ -24,9 +24,34 @@ jobs:
       - name: Verify JAR file
         run: ls -l target/
 
+      # Configure AWS credentials (using AWS secrets)
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # Log in to Public ECR
+      - name: Log in to Amazon ECR Public
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+
+      # Build Docker image
       - name: Build Docker Image
         run: |
           docker build -t ride-sharing-analytics:latest .
 
+      # Tag Docker image for Public ECR
+      - name: Tag Docker Image for ECR
+        run: |
+          docker tag ride-sharing-analytics:latest public.ecr.aws/<your-alias>/innovation/ride-share:latest
+
+      # Push Docker image to Public ECR
+      - name: Push Docker Image to ECR
+        run: |
+          docker push public.ecr.aws/<your-alias>/innovation/ride-share:latest
+
+      # Verify Docker image locally
       - name: Verify Docker Image
         run: docker images
