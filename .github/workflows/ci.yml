@@ -8,9 +8,9 @@ on:
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    env:
-      IMAGE_NAME: public.ecr.aws/p7g1n7k2/innovation/ride-share
-      IMAGE_TAG: ${{github.sha}}
+    #env:
+    #  IMAGE_NAME: public.ecr.aws/p7g1n7k2/innovation/ride-share
+    #  IMAGE_TAG: ${{github.sha}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
@@ -43,16 +43,22 @@ jobs:
       # Build Docker image
       - name: Build Docker Image
         run: |
+          IMAGE_NAME: public.ecr.aws/p7g1n7k2/innovation/ride-share
+          IMAGE_TAG: ${{github.sha}}
           docker build -t ride-sharing:${IMAGE_TAG::7} .
 
       # Tag Docker image for Public ECR
       - name: Tag Docker Image for ECR
         run: |
+          IMAGE_NAME: public.ecr.aws/p7g1n7k2/innovation/ride-share
+          IMAGE_TAG: ${{github.sha}}
           docker tag ride-sharing:${IMAGE_TAG::7} ${IMAGE_NAME}:${IMAGE_TAG::7}
 
       # Push Docker image to Public ECR
       - name: Push Docker Image to ECR
         run: |
+          IMAGE_NAME: public.ecr.aws/p7g1n7k2/innovation/ride-share
+          IMAGE_TAG: ${{github.sha}}
           docker push ${IMAGE_NAME}:${IMAGE_TAG::7}
 
       # Verify Docker image locally
