@@ -40,12 +40,12 @@ jobs:
       # Build Docker image
       - name: Build Docker Image
         run: |
-          docker build -t ride-sharing-analytics:latest .
+          docker build -t ride-sharing:latest .
 
       # Tag Docker image for Public ECR
       - name: Tag Docker Image for ECR
         run: |
-          docker tag ride-sharing-analytics:latest public.ecr.aws/p7g1n7k2/innovation/ride-share:latest
+          docker tag ride-sharing:latest public.ecr.aws/p7g1n7k2/innovation/ride-share:latest
 
       # Push Docker image to Public ECR
       - name: Push Docker Image to ECR
