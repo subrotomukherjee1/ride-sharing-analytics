@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: ride-share-container
-          image: public.ecr.aws/p7g1n7k2/innovation/ride-share:latest
+          image: ${IMAGE_NAME}:${IMAGE_TAG::7}
           ports:
             - containerPort: 8080
