@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ride-share-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ride-share
+  template:
+    metadata:
+      labels:
+        app: ride-share
+    spec:
+      containers:
+        - name: ride-share-container
+          image: public.ecr.aws/p7g1n7k2/innovation/ride-share:latest
+          ports:
+            - containerPort: 8080
